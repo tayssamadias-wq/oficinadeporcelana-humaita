@@ -65,7 +65,7 @@
             <ul class="list-disc list-inside text-xs space-y-1 text-[#5A524A]">
               <li> 1 caneca de porcelana</li>
               <li> Todo o material de pintura</li>
-              <li> Curadoria e orientações técnicas com <strong>Ana Salles</strong> e <strong>Lina Ramos</strong></li>
+              <li> Curadoria e orientações técnicas: <strong>Ana Salles</strong> | Suporte: <strong>Lina Ramos</strong></li>
             </ul>
           </div>
         </div>
@@ -172,7 +172,7 @@
               required
               class="mt-0.5 rounded text-[#8C7A6B] focus:ring-[#8C7A6B]"
             />
-            <span>Autorizo e consentizo o uso da minha imagem durante a Oficina.</span>
+            <span>Autorizo o uso da minha imagem durante a Oficina.</span>
           </label>
 
           <label class="flex items-start gap-2 cursor-pointer">
@@ -222,11 +222,9 @@
 
       const mensagemWa = `Olá! Meu nome é *${nomePessoa}*.\n\n` +
         `Acabei de me inscrever para a *Oficina de Pintura em Porcelana*!\n` +
-        `• *WhatsApp:* ${data.whatsapp || ''}\n` +
-        `• *Nível:* ${data.nivel || ''}\n\n` +
         `Gostaria de confirmar minha vaga e receber os dados para pagamento.`;
 
-      const urlWa = `https://wa.me/${21990401127}?text=${encodeURIComponent(mensagemWa)}`;
+      const urlWa = `https://wa.me/${5521990401127}?text=${encodeURIComponent(mensagemWa)}`;
       whatsappLink.href = urlWa;
 
       formData.append("access_key", ACCESS_KEY);
