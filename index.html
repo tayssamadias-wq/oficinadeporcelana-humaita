@@ -216,7 +216,7 @@
 
   </div>
 
-  <!-- JavaScript para Envio Formspree + Redirecionamento WhatsApp -->
+  <!-- JavaScript Atualizado (Envio em JSON + Tratamento de Erros) -->
   <script>
     const form = document.getElementById('oficina-form');
     const btnSubmit = document.getElementById('btn-submit');
@@ -232,14 +232,17 @@
       btnSubmit.disabled = true;
       btnSubmit.innerText = "Enviando...";
 
+      // Converte os dados do formulário para um objeto JSON
       const formData = new FormData(form);
-      const nomePessoa = formData.get('nome') || 'Aluna';
+      const data = Object.fromEntries(formData.entries());
+      const nomePessoa = data.nome || 'Aluna';
 
       try {
         const response = await fetch(FORMSPREE_URL, {
           method: 'POST',
-          body: formData,
+          body: JSON.stringify(data),
           headers: {
+            'Content-Type': 'application/json',
             'Accept': 'application/json'
           }
         });
@@ -251,7 +254,7 @@
 
           // Prepara link do WhatsApp
           const texto = encodeURIComponent(`Olá! Meu nome é ${nomePessoa}, acabei de me inscrever para a Oficina de Pintura em Porcelana em Humaitá e gostaria de confirmar a vaga.`);
-          const urlWa = `https://wa.me/${PHONE_WHATSAPP}?text=${texto}`;
+          const urlWa = `https://wa.me/${21990401127}?text=${texto}`;
 
           whatsappLink.href = urlWa;
 
@@ -261,12 +264,15 @@
           }, 1500);
 
         } else {
-          alert("Ocorreu um erro ao enviar. Por favor, tente novamente.");
+          const errorData = await response.json().catch(() => ({}));
+          console.error("Erro Formspree:", errorData);
+          alert("Não foi possível enviar. Verifique se o e-mail de ativação do Formspree foi confirmado na caixa de entrada!");
           btnSubmit.disabled = false;
           btnSubmit.innerText = "Concluir Inscrição ➔";
         }
       } catch (error) {
-        alert("Erro de conexão. Verifique sua internet e tente novamente.");
+        console.error("Erro na requisição:", error);
+        alert("Erro de conexão! Se você estiver testando o arquivo direto do computador (file://), suba para a Vercel para testar online.");
         btnSubmit.disabled = false;
         btnSubmit.innerText = "Concluir Inscrição ➔";
       }
